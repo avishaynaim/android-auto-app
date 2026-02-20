@@ -8,10 +8,12 @@ class MainActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val density = resources.displayMetrics.density
+        val pad = (24 * density).toInt()
         val text = TextView(this)
         text.text = "This app works with Android Auto.\n\nConnect your phone to your car via USB to get started."
         text.textSize = 18f
-        text.setPadding(64, 64, 64, 64)
+        text.setPadding(pad, pad, pad, pad)
         setContentView(text)
     }
 }
