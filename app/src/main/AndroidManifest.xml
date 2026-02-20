@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -13,7 +16,12 @@
             android:name="com.google.android.gms.car.application"
             android:resource="@xml/automotive_app_desc" />
 
-        <!-- Phone-side entry point: shows a "works with Android Auto" screen -->
+        <!-- REQUIRED: Android Auto uses this to discover and list the app -->
+        <meta-data
+            android:name="androidx.car.app.minCarApiLevel"
+            android:value="1" />
+
+        <!-- Phone-side entry point -->
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -27,11 +35,15 @@
         <service
             android:name=".MainCarAppService"
             android:exported="true"
+            android:foregroundServiceType="specialUse"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="androidx.car.app.CarAppService" />
                 <category android:name="androidx.car.app.category.OTHER" />
             </intent-filter>
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Android Auto car app service" />
         </service>
 
     </application>
